@@ -23,18 +23,18 @@ var DB Dbinstance
 // Connect function
 func Connect() {
 	p := config.Config("DB_PORT")
-	// because our config function returns a string, we are parsing our      str to int here
+	// because our config function returns a string, we are parsing our str to int here
 	port, err := strconv.ParseUint(p, 10, 32)
 	if err != nil {
 		fmt.Println("Error parsing str to int")
 	}
 
+	// mysql
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local", config.Config("DB_USER"), config.Config("DB_PASSWORD"), config.Config("DB_HOST"), port, config.Config("DB_NAME"))
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
+	// postgres
 	// dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=disable TimeZone=Asia/Shanghai", config.Config("DB_HOST"), config.Config("DB_USER"), config.Config("DB_PASSWORD"), config.Config("DB_NAME"), port)
-
-	// // mysql
 	// db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
 	// 	Logger: logger.Default.LogMode(logger.Info),
 	// })
